@@ -1,4 +1,4 @@
-import { serve } from "bun";
+import { password, serve } from "bun";
 import { Database } from "bun:sqlite";
 
 function startLegalTable(db: Database) {
@@ -24,7 +24,8 @@ function startLegalTable(db: Database) {
       mainValuesAndObjectives TEXT,
       latestProjects TEXT,
       contactNumber INTEGER,
-      contactEmail TEXT
+      contactEmail TEXT,
+      password TEXT
     );
   `);
     db.run(`INSERT INTO legalEntities (NIP, REGON, name, legalForm, address, dateOfStart, ScopeOfActivities, mainValuesAndObjectives, latestProjects, contactNumber, contactEmail) VALUES
@@ -148,8 +149,8 @@ function startLegalTable(db: Database) {
 
           // Insert user into the database
           db.run(
-            "INSERT INTO legalEntities (NIP, REGON, name, legalForm, address, dateOfStart, ScopeOfActivities, mainValuesAndObjectives, latestProjects, contactNumber, contactEmail) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-            [NIP, REGON, name, legalForm, address, dateOfStart, ScopeOfActivities, mainValuesAndObjectives, latestProjects, contactNumber, contactEmail]
+            "INSERT INTO legalEntities (NIP, REGON, name, legalForm, address, dateOfStart, ScopeOfActivities, mainValuesAndObjectives, latestProjects, contactNumber, contactEmail, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            [NIP, REGON, name, legalForm, address, dateOfStart, ScopeOfActivities, mainValuesAndObjectives, latestProjects, contactNumber, contactEmail, password]
           );
           return new Response("Company/NGO added successfully", {
             status: 201,

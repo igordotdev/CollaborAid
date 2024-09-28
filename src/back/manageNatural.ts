@@ -1,4 +1,4 @@
-import { serve } from "bun";
+import { password, serve } from "bun";
 import { Database } from "bun:sqlite";
 
 function startNaturalTable(db: Database) {
@@ -19,7 +19,8 @@ function startNaturalTable(db: Database) {
         lastName TEXT,
         age INTEGER,
         email TEXT,
-        city TEXT
+        city TEXT,
+        password TEXT
       );
     `);
     db.run(`INSERT INTO naturalEntities (firstName, lastName, age, email, city) VALUES
@@ -101,8 +102,8 @@ function startNaturalTable(db: Database) {
 
           // Insert user into the database
           db.run(
-            "INSERT INTO naturalEntities (firstName, lastName, age, email, city) VALUES (?, ?, ?, ?, ?)",
-            [firstName, lastName, age, email, city]
+            "INSERT INTO naturalEntities (firstName, lastName, age, email, city, password) VALUES (?, ?, ?, ?, ?, ?)",
+            [firstName, lastName, age, email, city, password]
           );
           return new Response("User added successfully", {
             status: 201,
