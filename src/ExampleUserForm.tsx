@@ -2,15 +2,7 @@
 import "./App.css";
 import "./index.css";
 import React, { useState, useEffect } from "react";
-
-type User = {
-  id: number;
-  firstName: string;
-  lastName: string;
-  age: number;
-  city: string;
-  email: string;
-};
+import { User } from "./back/types.ts";
 
 const App: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
