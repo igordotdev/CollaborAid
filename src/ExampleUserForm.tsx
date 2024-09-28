@@ -1,21 +1,28 @@
 // src/App.tsx
-
+import "./App.css";
+import "./index.css";
 import React, { useState, useEffect } from "react";
 
 type User = {
   id: number;
-  name: string;
+  firstName: string;
+  lastName: string;
   age: number;
+  city: string;
+  email: string;
 };
 
 const App: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
-  const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [age, setAge] = useState<number | "">("");
+  const [email, setEmail] = useState("");
+  const [city, setCity] = useState("");
 
   // Fetch users from the backend
   const fetchUsers = async () => {
-    const response = await fetch("http://localhost:3000/api/users");
+    const response = await fetch("http://localhost:3000/api/naturalEntities");
     const data = await response.json();
     setUsers(data);
   };
@@ -24,16 +31,22 @@ const App: React.FC = () => {
   const handleAddUser = async (e: React.FormEvent<HTMLFormElement>) => {
     console.log("handleAddUser");
     e.preventDefault();
-    if (name && age) {
-      const response = await fetch("http://localhost:3000/api/users", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, age: Number(age) }),
-      });
+    if (firstName && lastName && age && email && city) {
+      const response = await fetch(
+        "http://localhost:3000/api/naturalEntities",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ firstName, lastName, age, email, city }),
+        }
+      );
 
       if (response.ok) {
         alert("User added successfully!");
-        setName("");
+        setFirstName("");
+        setLastName("");
+        setCity("");
+        setEmail("");
         setAge("");
         fetchUsers(); // Refresh users list
       } else {
@@ -44,9 +57,12 @@ const App: React.FC = () => {
 
   // Delete a user by ID
   const deleteUser = async (userId: number) => {
-    const response = await fetch(`http://localhost:3000/api/users/${userId}`, {
-      method: "DELETE",
-    });
+    const response = await fetch(
+      `http://localhost:3000/api/naturalEntities/${userId}`,
+      {
+        method: "DELETE",
+      }
+    );
 
     if (response.ok) {
       alert("User deleted successfully!");
@@ -68,11 +84,21 @@ const App: React.FC = () => {
       <h2>Add New User</h2>
       <form onSubmit={handleAddUser}>
         <label>
-          Name:
+          firstName:
           <input
             type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            required
+          />
+        </label>
+
+        <label>
+          lastName:
+          <input
+            type="text"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
             required
           />
         </label>
@@ -82,7 +108,29 @@ const App: React.FC = () => {
           <input
             type="number"
             value={age}
-            onChange={(e) => setAge(e.target.value ? Number(e.target.value) : "")}
+            onChange={(e) =>
+              setAge(e.target.value ? Number(e.target.value) : "")
+            }
+            required
+          />
+        </label>
+
+        <label>
+          Email:
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </label>
+
+        <label>
+          City:
+          <input
+            type="text"
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
             required
           />
         </label>
@@ -93,7 +141,8 @@ const App: React.FC = () => {
       <ul>
         {users.map((user) => (
           <li key={user.id}>
-            {user.name}, Age: {user.age}
+            {user.firstName}, {user.lastName}, Age: {user.age}, Email:{" "}
+            {user.email}, City: {user.city}
             <button onClick={() => deleteUser(user.id)}>Delete</button>
           </li>
         ))}
