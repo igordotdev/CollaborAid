@@ -12,12 +12,15 @@ const corsHeaders = {
   "Content-Type": "application/json",
 };
 
-function queryDatabase(db: Database, portNum: number) {
+
+//this code is unreadable but I dont have time to refactor it
+//and its my first time doing backend
+function setEndpointDatabase(db: Database) {
   // Define the server
   serve({
-    port: portNum,
+    port: 3000,
     async fetch(req) {
-      const url = new URL(req.url, `http://${req.headers.get("host")}`);
+      const url = new URL(req.url);
 
       if (req.method === "OPTIONS") {
         // Handle preflight requests for CORS
@@ -145,6 +148,12 @@ function queryDatabase(db: Database, portNum: number) {
             status: 200,
             headers: corsHeaders,
           });
+        } else if (
+          req.method === "GET" &&
+          url.pathname === "/api/blogPosts"
+        ){
+          const posts = db.query("SELECT * FROM blogPosts SORT BY date DESC").all();
+          return new Response(JSON.stringify(posts), { headers: corsHeaders });
         } else {
           return new Response("Not Found", {
             status: 404,
@@ -162,4 +171,4 @@ function queryDatabase(db: Database, portNum: number) {
   });
 }
 
-export { queryDatabase };
+export { setEndpointDatabase };

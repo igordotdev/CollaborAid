@@ -1,5 +1,4 @@
 import { Database } from "bun:sqlite";
-import { queryDatabase } from "./queryDatabase"
 
 // Helper function to build dynamic queries
 function buildQueryNatural(
@@ -32,7 +31,8 @@ function buildQueryNatural(
   }
 
 function startNaturalTable(db: Database) {
-  // db.run("DROP TABLE IF EXISTS naturalEntities");
+    //comment this out later
+  db.run("DROP TABLE IF EXISTS naturalEntities");
 
   // Create the users table if it doesn't exist
   if (
@@ -57,10 +57,7 @@ function startNaturalTable(db: Database) {
       ('John', 'Doe', 30, 'johndoe@gmail.com', 'New York'),
       ('Jane', 'Doe', 25, 'janedoe@latimes.com', 'Los Angeles');`);
   }
-
-  queryDatabase(db, 3001);
-
-  console.log("Server running on http://localhost:3001");
+  console.log("Server running on http://localhost:3000");
 };
 
 export { startNaturalTable };

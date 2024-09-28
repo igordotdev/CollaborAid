@@ -1,5 +1,4 @@
 import { Database } from "bun:sqlite";
-import { queryDatabase } from "./queryDatabase"
 
 function buildQueryLegal(
     baseQuery: string,
@@ -31,7 +30,8 @@ function buildQueryLegal(
   }
 
 function startLegalTable(db: Database) {
-  // db.run("DROP TABLE IF EXISTS legalEntities");
+//comment this out later!!!
+  db.run("DROP TABLE IF EXISTS legalEntities");
 
   // Create the users table if it doesn't exist
   if (
@@ -99,9 +99,6 @@ function startLegalTable(db: Database) {
   }
 
   // Helper function to build dynamic queries
-  
-
-  queryDatabase(db, 3000);
 
   console.log("Server running on http://localhost:3000");
 };
