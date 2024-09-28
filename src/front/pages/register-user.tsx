@@ -20,7 +20,6 @@ export const RegisterUser = () => {
 
   // Add a new user
   const handleAddUser = async (e: React.FormEvent<HTMLFormElement>) => {
-    console.log("handleAddUser");
     e.preventDefault();
     if (firstName && lastName && age && email && city) {
       const response = await fetch(
