@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { handleAddUser } from "../../back/naturalUsers.ts";
 
-type User = {
+/* type User = {
   id: number;
   firstName: string;
   lastName: string;
@@ -9,7 +8,7 @@ type User = {
   city: string;
   email: string;
   password: string;
-};
+}; */
 
 export const RegisterUser = () => {
   const [firstName, setFirstName] = useState("");

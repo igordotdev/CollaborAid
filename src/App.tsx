@@ -8,6 +8,7 @@ import Blog from "./front/pages/blog.tsx";
 import About from "./front/pages/about.tsx";
 // import Profile from "./front/pages/profile.tsx";
 import { RegisterUser } from "./front/pages/register-user.tsx";
+// import { initDatabase } from "./back/manageDatabase.ts";
 
 function App() {
   return (

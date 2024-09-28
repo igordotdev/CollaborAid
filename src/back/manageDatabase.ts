@@ -1,9 +1,19 @@
 import { Database } from "bun:sqlite";
 import { startLegalTable } from "./manageLegal";
 import { startNaturalTable } from "./manageNatural";
+import { startBlogTable } from "./manageBlog";
+import { setEndpointDatabase } from "./queryDatabase";
 
-// Initialize SQLite database
-const db = new Database("mydb.sqlite");
+initDatabase();
 
-startLegalTable(db);
-startNaturalTable(db);
+function initDatabase() {
+  // Initialize SQLite database
+  const db = new Database("mydb.sqlite");
+
+  startLegalTable(db);
+  startNaturalTable(db);
+  startBlogTable(db);
+  setEndpointDatabase(db);
+}
+
+export { initDatabase };

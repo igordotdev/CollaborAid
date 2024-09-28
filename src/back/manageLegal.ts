@@ -1,5 +1,4 @@
 import { Database } from "bun:sqlite";
-import { queryDatabase } from "./queryDatabase"
 
 function buildQueryLegal(
     baseQuery: string,
@@ -100,9 +99,6 @@ function startLegalTable(db: Database) {
   }
 
   // Helper function to build dynamic queries
-  
-
-  queryDatabase(db, 3000);
 
   console.log("Server running on http://localhost:3000");
 };
