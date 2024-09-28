@@ -1,6 +1,6 @@
 import { serve } from "bun";
 import { Database } from "bun:sqlite";
-import { getTokenFromRequest, generateToken, SECRET_KEY } from "./logIn";
+import { getTokenFromRequest, generateToken, SECRET_KEY } from "./logUtils";
 import jwt from "jsonwebtoken";
 
 function tryLogInLegal(db: Database) {
