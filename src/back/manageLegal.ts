@@ -1,5 +1,6 @@
-import { password, serve } from "bun";
+import { serve } from "bun";
 import { Database } from "bun:sqlite";
+import bcrypt from "bcrypt";
 
 function startLegalTable(db: Database) {
   // db.run("DROP TABLE IF EXISTS legalEntities");
@@ -14,8 +15,8 @@ function startLegalTable(db: Database) {
   ) {
     db.run(`
     CREATE TABLE legalEntities (
-      NIP INTEGER PRIMARY KEY,
-      REGON INTEGER,
+      NIP INTEGER,
+      REGON INTEGER PRIMARY KEY,
       name TEXT,
       legalForm TEXT,
       address TEXT,
@@ -145,12 +146,12 @@ function startLegalTable(db: Database) {
           url.pathname === "/api/legalEntities"
         ) {
           // Ensure that the request body is in JSON format
-          const { NIP, REGON, name, legalForm, address, dateOfStart, ScopeOfActivities, mainValuesAndObjectives, latestProjects, contactNumber, contactEmail } = await req.json(); // Adjust based on your new form
-
+          const { NIP, REGON, name, legalForm, address, dateOfStart, ScopeOfActivities, mainValuesAndObjectives, latestProjects, contactNumber, contactEmail, password } = await req.json(); // Adjust based on your new form
+          const hashedPassword = bcrypt.hashSync(password, 10);
           // Insert user into the database
           db.run(
             "INSERT INTO legalEntities (NIP, REGON, name, legalForm, address, dateOfStart, ScopeOfActivities, mainValuesAndObjectives, latestProjects, contactNumber, contactEmail, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-            [NIP, REGON, name, legalForm, address, dateOfStart, ScopeOfActivities, mainValuesAndObjectives, latestProjects, contactNumber, contactEmail, password]
+            [NIP, REGON, name, legalForm, address, dateOfStart, ScopeOfActivities, mainValuesAndObjectives, latestProjects, contactNumber, contactEmail, hashedPassword]
           );
           return new Response("Company/NGO added successfully", {
             status: 201,
@@ -160,8 +161,8 @@ function startLegalTable(db: Database) {
           req.method === "DELETE" &&
           url.pathname.startsWith("/api/legalEntities/")
         ) {
-          const NIPid = Number(url.pathname.split("/")[3]);
-          db.run("DELETE FROM legalEntities WHERE NIP = ?", [NIPid]);
+          const REGONid = Number(url.pathname.split("/")[3]);
+          db.run("DELETE FROM legalEntities WHERE REGON = ?", [REGONid]);
           return new Response("User deleted successfully", {
             status: 200,
             headers: corsHeaders,

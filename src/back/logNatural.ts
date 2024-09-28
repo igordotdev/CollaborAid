@@ -2,6 +2,7 @@ import { serve } from "bun";
 import { Database } from "bun:sqlite";
 import { getTokenFromRequest, generateToken, SECRET_KEY } from "./logUtils";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 
 function tryLogInNatural(db: Database) {
   // Define the Bun server
@@ -15,11 +16,11 @@ function tryLogInNatural(db: Database) {
         const { email, password } = await req.json();
 
         // Query the database for the user
-        const row = db
+        const row : any = db
           .query("SELECT * FROM naturalEntities WHERE email = ? AND password = ?")
           .get(email, password);
 
-        if (row) {
+        if (row && bcrypt.compareSync(password, row.password)) {
           // If user found, create a JWT and send it as a cookie
           const token = generateToken(email);
           return new Response("Logged in successfully", {

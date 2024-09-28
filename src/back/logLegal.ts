@@ -2,6 +2,7 @@ import { serve } from "bun";
 import { Database } from "bun:sqlite";
 import { getTokenFromRequest, generateToken, SECRET_KEY } from "./logUtils";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 
 function tryLogInLegal(db: Database) {
   const server = serve({
@@ -11,16 +12,16 @@ function tryLogInLegal(db: Database) {
 
       // Login endpoint
       if (url.pathname === "/login" && req.method === "POST") {
-        const { NIP, password } = await req.json();
+        const { REGON, password } = await req.json();
 
         // Query the database for the user
-        const row = db
-          .query("SELECT * FROM legalEntities WHERE NIP = ? AND password = ?")
-          .get(NIP, password);
+        const row : any = db
+          .query("SELECT * FROM legalEntities WHERE REGON = ? AND password = ?")
+          .get(REGON, password);
 
-        if (row) {
+        if (row && bcrypt.compareSync(password, row.password)) {
           // If user found, create a JWT and send it as a cookie
-          const token = generateToken(NIP);
+          const token = generateToken(REGON);
           return new Response("Logged in successfully", {
             headers: {
               "Set-Cookie": `token=${token}; HttpOnly; Max-Age=604800; Path=/`, // Cookie expires in 7 days
@@ -41,8 +42,8 @@ function tryLogInLegal(db: Database) {
         }
 
         try {
-          const payload = jwt.verify(token, SECRET_KEY) as { NIP: string };
-          return new Response(`Welcome back, ${payload.NIP}`, {
+          const payload = jwt.verify(token, SECRET_KEY) as { REGON: string };
+          return new Response(`Welcome back, ${payload.REGON}`, {
             status: 200,
           });
         } catch {

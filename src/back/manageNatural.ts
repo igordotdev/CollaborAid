@@ -1,4 +1,4 @@
-import { password, serve } from "bun";
+import { serve } from "bun";
 import { Database } from "bun:sqlite";
 
 function startNaturalTable(db: Database) {
@@ -98,7 +98,7 @@ function startNaturalTable(db: Database) {
           url.pathname === "/api/naturalEntities"
         ) {
           // Ensure that the request body is in JSON format
-          const { firstName, lastName, age, email, city } = await req.json(); // Adjust based on your new form
+          const { firstName, lastName, age, email, city, password } = await req.json(); // Adjust based on your new form
 
           // Insert user into the database
           db.run(
