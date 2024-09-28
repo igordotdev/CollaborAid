@@ -1,10 +1,14 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import NavButton from "./components/buttons/NavButton/NavButton.tsx";
 
-createRoot(document.getElementById('root')!).render(
+const onClick = () => {
+  console.log("Button pressed");
+};
+
+createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <App />
+    <NavButton text={"test"} onClick={onClick} />
   </StrictMode>,
-)
+);
