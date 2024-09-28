@@ -1,6 +1,34 @@
-import { serve } from "bun";
 import { Database } from "bun:sqlite";
-import bcrypt from "bcrypt";
+import { queryDatabase } from "./queryDatabase"
+
+function buildQueryLegal(
+    baseQuery: string,
+    filters: Record<string, any>
+  ): { query: string; params: any[] } {
+    const params: any[] = [];
+    const conditions: string[] = [];
+
+    for (const [key, value] of Object.entries(filters)) {
+      if (value) {
+        if (key === "name" || key === "address" || key === "scopeOfActivities" || key === "mainValuesAndObjectives" || key === "latestProjects") {
+          conditions.push(`${key} LIKE ?`);
+          params.push(`%${value}%`);
+        } else if (key === "NIP" || key === "REGON" || key === "contactNumber") {
+          conditions.push(`${key} = ?`);
+          params.push(Number(value));
+        } else {
+          conditions.push(`${key} = ?`);
+          params.push(value);
+        }
+      }
+    }
+
+    const query =
+      conditions.length > 0
+        ? `${baseQuery} WHERE ${conditions.join(" AND ")}`
+        : baseQuery;
+    return { query, params };
+  }
 
 function startLegalTable(db: Database) {
   // db.run("DROP TABLE IF EXISTS legalEntities");
@@ -70,120 +98,12 @@ function startLegalTable(db: Database) {
 ('9878901234', '987890123', 'StalPol S.A.', 'Spółka akcyjna', 'ul. Stalowa 88, 00-038 Warszawa', '2015-01-18', 'Przemysł stalowy', 'Produkcja wysokiej jakości wyrobów stalowych', 'Wdrożenie nowych procesów produkcyjnych dla zbrojeń', '888 000 222', 'info@stalpol.pl');`);
   }
 
-  // Define the common CORS headers
-  const corsHeaders = {
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type",
-    "Content-Type": "application/json",
-  };
-
   // Helper function to build dynamic queries
-  function buildQuery(
-    baseQuery: string,
-    filters: Record<string, any>
-  ): { query: string; params: any[] } {
-    const params: any[] = [];
-    const conditions: string[] = [];
+  
 
-    for (const [key, value] of Object.entries(filters)) {
-      if (value) {
-        if (key === "name" || key === "address" || key === "scopeOfActivities" || key === "mainValuesAndObjectives" || key === "latestProjects") {
-          conditions.push(`${key} LIKE ?`);
-          params.push(`%${value}%`);
-        } else if (key === "NIP" || key === "REGON" || key === "contactNumber") {
-          conditions.push(`${key} = ?`);
-          params.push(Number(value));
-        } else {
-          conditions.push(`${key} = ?`);
-          params.push(value);
-        }
-      }
-    }
-
-    const query =
-      conditions.length > 0
-        ? `${baseQuery} WHERE ${conditions.join(" AND ")}`
-        : baseQuery;
-    return { query, params };
-  }
-
-  // Define the server
-  serve({
-    port: 3000,
-    async fetch(req) {
-      const url = new URL(req.url, `http://${req.headers.get("host")}`);
-
-      if (req.method === "OPTIONS") {
-        // Handle preflight requests for CORS
-        return new Response(null, { headers: corsHeaders });
-      }
-
-      try {
-        if (req.method === "GET" && url.pathname === "/api/legalEntities") {
-          const filters = {
-            NIP: url.searchParams.get("NIP"),
-            REGON: url.searchParams.get("REGON"),
-            name: url.searchParams.get("name"),
-            legalForm: url.searchParams.get("legalForm"),
-            address: url.searchParams.get("address"),
-            dateOfStart: url.searchParams.get("dateOfStart"),
-            scopeOfActivities: url.searchParams.get("scopeOfActivities"),
-            mainValuesAndObjectives: url.searchParams.get("mainValuesAndObjectives"),
-            latestProjects: url.searchParams.get("latestProjects"),
-            contactNumber: url.searchParams.get("contactNumber"),
-            contactEmail: url.searchParams.get("contactEmail")          
-          };
-
-          const { query, params } = buildQuery(
-            "SELECT * FROM legalEntities",
-            filters
-          );
-          const users = db.query(query).all(...params);
-          return new Response(JSON.stringify(users), { headers: corsHeaders });
-        } else if (
-          req.method === "POST" &&
-          url.pathname === "/api/legalEntities"
-        ) {
-          // Ensure that the request body is in JSON format
-          const { NIP, REGON, name, legalForm, address, dateOfStart, ScopeOfActivities, mainValuesAndObjectives, latestProjects, contactNumber, contactEmail, password } = await req.json(); // Adjust based on your new form
-          const hashedPassword = bcrypt.hashSync(password, 10);
-          // Insert user into the database
-          db.run(
-            "INSERT INTO legalEntities (NIP, REGON, name, legalForm, address, dateOfStart, ScopeOfActivities, mainValuesAndObjectives, latestProjects, contactNumber, contactEmail, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-            [NIP, REGON, name, legalForm, address, dateOfStart, ScopeOfActivities, mainValuesAndObjectives, latestProjects, contactNumber, contactEmail, hashedPassword]
-          );
-          return new Response("Company/NGO added successfully", {
-            status: 201,
-            headers: corsHeaders,
-          });
-        } else if (
-          req.method === "DELETE" &&
-          url.pathname.startsWith("/api/legalEntities/")
-        ) {
-          const REGONid = Number(url.pathname.split("/")[3]);
-          db.run("DELETE FROM legalEntities WHERE REGON = ?", [REGONid]);
-          return new Response("User deleted successfully", {
-            status: 200,
-            headers: corsHeaders,
-          });
-        } else {
-          return new Response("Not Found", {
-            status: 404,
-            headers: corsHeaders,
-          });
-        }
-      } catch (error) {
-        console.error("Error handling request:", error);
-        return new Response("Internal Server Error", {
-          status: 500,
-          headers: corsHeaders,
-        });
-      }
-    },
-  });
+  queryDatabase(db, 3000);
 
   console.log("Server running on http://localhost:3000");
 };
 
-export { startLegalTable };
+export { startLegalTable, buildQueryLegal };

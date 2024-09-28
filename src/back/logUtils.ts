@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 
-// HARDCODED! DO NOT USE IN PRODUCTION!
+// HARDCODED! Normally would not be saved in the source code and not in the repo
+// This is just for the sake of simplicity for the hackathon :P
 const SECRET_KEY = "3Fg$6!8mQ^c2nDj3*8Zl$kEr@1B8!dC2s8Pj$5Fq@9LmZ";
 
 function generateToken(username: string) {
