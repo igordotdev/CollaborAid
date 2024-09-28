@@ -32,7 +32,8 @@ function buildQueryNatural(
   }
 
 function startNaturalTable(db: Database) {
-  // db.run("DROP TABLE IF EXISTS naturalEntities");
+    //comment this out later
+  db.run("DROP TABLE IF EXISTS naturalEntities");
 
   // Create the users table if it doesn't exist
   if (
