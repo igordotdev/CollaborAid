@@ -31,7 +31,8 @@ function buildQueryLegal(
   }
 
 function startLegalTable(db: Database) {
-  // db.run("DROP TABLE IF EXISTS legalEntities");
+//comment this out later!!!
+  db.run("DROP TABLE IF EXISTS legalEntities");
 
   // Create the users table if it doesn't exist
   if (
