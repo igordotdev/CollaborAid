@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { User } from "../../back/types.ts";
+import { UserLegal } from "../../back/types.ts";
 
 const Listings = () => {
 
@@ -9,17 +9,19 @@ const Listings = () => {
 		setUsers(data);
 	};
 
-	const [users, setUsers] = useState<User[]>([]);
-
+	const [users, setUsers] = useState<UserLegal[]>([]);
+	useEffect(() => {
+        fetchUsers();
+    }, []);
 	return (
 		<>
 		<h1 className="lex text-center font-medium text-3xl pt-10 pb-24"> Find your next collaboration</h1>
 		<div className="flex flex-row">
 		<ul>
         {users.map((user) => (
-          <li key={user.id}>
-            {user.firstName}, {user.lastName}, Age: {user.age}, Email:{" "}
-            {user.email}, City: {user.city}
+          <li>
+            {user.NIP}, {user.REGON}, Age: {user.name}, Email:{" "}
+            {user.contactEmail}, City: {user.mainValuesAndObjectives}
           </li>
         ))}
       </ul>
