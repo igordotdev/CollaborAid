@@ -8,7 +8,7 @@ export const Navbar = () => {
       <nav className="w-full h-20 flex pl-4 items-center bg-transparent">
         <div>
           <Link to="/" className="flex items-center">
-            <img src="/vite.svg" alt="Vite Logo" className="h-12" />
+            <img src="/assets/logo-black.svg" alt="CollaborAid" className="h-12" />
             <div className="flex flex-row">
               <h1 className="ml-5 text-2xl font-semibold">Collabor</h1><h1 className="text-2xl font-semibold text-red-600">Aid</h1>
             </div>
