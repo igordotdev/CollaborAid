@@ -43,29 +43,7 @@ interface BlogPost {
 	  };
 	  fetchBlogPosts();
 	}, []); // Only runs on initial render
-  
-	// Fetch company data when `posts` is updated and `authorLegal` is available
-	useEffect(() => {
-	  const checkAuthor = async () => {
-		if (posts.length > 0 && posts[0].authorLegal) {
-		  try {
-			const response = await fetch(`http://localhost:3000/api/legalEntities?REGON=${posts[0].authorLegal}`);
-			if (!response.ok) {
-			  throw new Error(`HTTP error! status: ${response.status}`);
-			}
-			const data = await response.json();
-			console.log("Fetched Company Data:", data); // Log the fetched company data
-			setCompany(data);
-		  } catch (error) {
-			console.error("Error fetching company data:", error);
-		  }
-		} else {
-		  console.warn("No posts or authorLegal available.");
-		}
-	  };
-	  checkAuthor();
-	}, [posts]); // Re-run when `posts` changes and is populated
-  
+
 	return (
 	  <>
 		<div className="p-6">
@@ -77,7 +55,6 @@ interface BlogPost {
 				<h2 className="text-2xl font-semibold text-red-700">{post.title}</h2>
 				<p className="text-gray-600 mb-2">{new Date(post.date).toLocaleDateString()}</p>
 				<p className="text-lg text-gray-800">{post.content}</p>
-				<p className="text-lg text-gray-800">{company?.name}</p>
 			  </div>
 			))):(<h2 className="text-2xl font-semibold text-red-700">No blog posts available.</h2>)}
 		  </div>

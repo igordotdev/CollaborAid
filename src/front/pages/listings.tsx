@@ -34,7 +34,7 @@ const Listings = () => {
 		<div className="flex flex-row w-[80%] ml-0">
 		<ul className="w-full">
         {sortedUsers.slice((page-1)*10,page * 10).map((user) => (
-          <li className="mb-2">
+          <li key={user.REGON} className="mb-2">
 						<Link to={`/profile/${user.REGON}`}>
 									<CompanyListItem compatibility={user.compatibility} location={user.address} title={user.name} description={user.mainValuesAndObjectives} date={user.dateOfStart} styling={"ml-[20%] flex text-left"} />
 						</Link>
