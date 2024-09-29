@@ -87,6 +87,7 @@ function setEndpointDatabase(db: Database) {
             latestProjects: url.searchParams.get("latestProjects"),
             contactNumber: url.searchParams.get("contactNumber"),
             contactEmail: url.searchParams.get("contactEmail"),
+            compatibility: url.searchParams.get("compatibility"),
           };
 
           const { query, params } = buildQueryLegal(
@@ -113,10 +114,11 @@ function setEndpointDatabase(db: Database) {
             contactNumber,
             contactEmail,
             password,
+            compatibility
           } = await req.json(); // Adjust based on your new form
           // Insert user into the database
           db.run(
-            "INSERT INTO legalEntities (NIP, REGON, name, legalForm, address, dateOfStart, ScopeOfActivities, mainValuesAndObjectives, latestProjects, contactNumber, contactEmail, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            "INSERT INTO legalEntities (NIP, REGON, name, legalForm, address, dateOfStart, ScopeOfActivities, mainValuesAndObjectives, latestProjects, contactNumber, contactEmail, password, compatibility) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             [
               NIP,
               REGON,
@@ -130,6 +132,7 @@ function setEndpointDatabase(db: Database) {
               contactNumber,
               contactEmail,
               password,
+              compatibility
             ]
           );
           return new Response("Company/NGO added successfully", {

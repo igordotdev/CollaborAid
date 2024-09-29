@@ -5,7 +5,9 @@ export const Hero = () => {
 	return (
 		<div className="w-full h-full" style={{ backgroundImage: "url('/assets/hero-image.jpg')", backgroundPosition: 'center', backgroundSize: 'cover' }}>
 			<div className='ml-20 pt-64 pb-[30%]'>
-				<h1 className="font-bold text-5xl text-white">CollaborAid</h1>
+				<div className='flex flex-row'>\
+					<h1 className="font-bold text-5xl text-white">Collabor</h1><h1 className="font-bold text-5xl text-red-600">Aid</h1>
+				</div>
 				<p className="mt-8 text-xl text-white font-medium">Where great opportunities are born</p>
 			</div>
 			<div className='flex pb-36'>

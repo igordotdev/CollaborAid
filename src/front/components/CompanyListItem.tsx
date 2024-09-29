@@ -6,6 +6,7 @@ interface CompanyListItemProps {
   date: string;
   description: string;
   styling: string;
+  compatibility: number;
 }
 
 export const CompanyListItem: React.FC<CompanyListItemProps> = ({
@@ -14,6 +15,7 @@ export const CompanyListItem: React.FC<CompanyListItemProps> = ({
   date,
   description,
   styling,
+  compatibility,
 }) => {
   return (
     <div className={styling}>
@@ -23,12 +25,21 @@ export const CompanyListItem: React.FC<CompanyListItemProps> = ({
             "bg-gray-50 w-full h-32 rounded-3xl hover:bg-gray-100 active:bg-gray-200 transition duration-300"
           }
         >
+          <div className={"flex"}>
           <p className={"text-xl font-semibold mb-1.5 mt-1 ml-3"}>{title}</p>
+          {compatibility < 50 ? (
+            <p className={"text-m justify-end font-medium items-center mt-2 ml-auto mr-7 text-red-700"}>Compatibility: {compatibility}%</p>
+          ) : compatibility < 75 ? (
+            <p className={"text-m justify-end font-medium items-center mt-2 ml-auto mr-7 text-yellow-700"}>Compatibility: {compatibility}%</p>
+          ) : (
+            <p className={"text-m justify-end font-medium items-center mt-2 ml-auto mr-7 text-green-700"}>Compatibility: {compatibility}%</p>
+          )}
+          </div>
           <div className={"flex ml-3"}>
             <div className={"flex"}>
               <img
                 className={"w-5"}
-                src={"./public/assets/location-icon.svg"}
+                src={"/assets/location-icon.svg"}
                 alt={""}
               />
               <p className={"text-sm font-medium ml-1"}>{location}</p>
@@ -36,7 +47,7 @@ export const CompanyListItem: React.FC<CompanyListItemProps> = ({
             <div className={"flex ml-5"}>
               <img
                 className={"w-5"}
-                src={"./public/assets/calendar-icon.svg"}
+                src={"/assets/calendar-icon.svg"}
                 alt={""}
               />
               <p className={"text-sm font-medium ml-1 mr-2"}>{date}</p>

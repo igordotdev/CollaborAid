@@ -9,7 +9,9 @@ export const Navbar = () => {
         <div>
           <Link to="/" className="flex items-center">
             <img src="/vite.svg" alt="Vite Logo" className="h-12" />
-            <h1 className="ml-5 text-2xl font-semibold">CollaborAid</h1>
+            <div className="flex flex-row">
+              <h1 className="ml-5 text-2xl font-semibold">Collabor</h1><h1 className="text-2xl font-semibold text-red-600">Aid</h1>
+            </div>
           </Link>
         </div>
         <Link className="ml-12" to="/listings">

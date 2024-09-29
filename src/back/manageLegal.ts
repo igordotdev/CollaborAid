@@ -54,7 +54,8 @@ function startLegalTable(db: Database) {
       latestProjects TEXT,
       contactNumber INTEGER,
       contactEmail TEXT,
-      password TEXT
+      password TEXT,
+      compatibility INTEGER
     );
   `);
     db.run(`INSERT INTO legalEntities (NIP, REGON, name, legalForm, address, dateOfStart, ScopeOfActivities, mainValuesAndObjectives, latestProjects, contactNumber, contactEmail, compatibility) VALUES
@@ -81,11 +82,11 @@ function startLegalTable(db: Database) {
 ('2223334445', '222333444', 'TechSolutions Sp. z o.o.', 'Spółka z ograniczoną odpowiedzialnością', 'ul. Techniczna 5, 00-021 Warszawa', '2016-03-21', 'Doradztwo technologiczne, IT', 'Innowacje technologiczne w biznesie', 'Projektowanie aplikacji mobilnych dla branży finansowej', '111 222 333', 'biuro@techsolutions.pl', '45'),
 ('3334445556', '333444555', 'MebleX S.A.', 'Spółka akcyjna', 'ul. Meblowa 10, 00-022 Warszawa', '2012-08-14', 'Produkcja i sprzedaż mebli', 'Tworzenie wysokiej jakości mebli', 'Nowa linia mebli biurowych premium', '222 333 444', 'kontakt@meblex.pl', '51'),
 ('4445556667', '444555666', 'Budex Sp. j.', 'Spółka jawna', 'ul. Budowlana 15, 00-023 Warszawa', '2018-05-10', 'Usługi budowlane', 'Profesjonalne usługi budowlane i remontowe', 'Renowacja zabytkowej kamienicy w centrum Warszawy', '333 444 555', 'biuro@budex.pl', '72'),
-('5556667778', '555666777', 'AutoSerwis sp.k.', 'Spółka komandytowa', 'ul. Mechaniczna 20, 00-024 Warszawa', '2014-11-22', 'Naprawa samochodów, serwis pojazdów', 'Profesjonalny serwis pojazdów mechanicznych', 'Otworzenie nowego punktu serwisowego w Warszawie', '444 555 666', 'serwis@autoservis.pl, '34'),
-('6667778889', '666777888', 'GreenEnergy S.A.', 'Spółka akcyjna', 'ul. Energetyczna 25, 00-025 Warszawa', '2017-09-05', 'Energetyka odnawialna', 'Promowanie zrównoważonych źródeł energii', 'Budowa farmy wiatrowej na Mazurach', '555 666 777', 'kontakt@greenenergy.pl'),
+('5556667778', '555666777', 'AutoSerwis sp.k.', 'Spółka komandytowa', 'ul. Mechaniczna 20, 00-024 Warszawa', '2014-11-22', 'Naprawa samochodów, serwis pojazdów', 'Profesjonalny serwis pojazdów mechanicznych', 'Otworzenie nowego punktu serwisowego w Warszawie', '444 555 666', 'serwis@autoservis.pl', '34'),
+('6667778889', '666777888', 'GreenEnergy S.A.', 'Spółka akcyjna', 'ul. Energetyczna 25, 00-025 Warszawa', '2017-09-05', 'Energetyka odnawialna', 'Promowanie zrównoważonych źródeł energii', 'Budowa farmy wiatrowej na Mazurach', '555 666 777', 'kontakt@greenenergy.pl', '10'),
 ('7778889990', '777888999', 'ABC Logistic sp.k.', 'Spółka komandytowa', 'ul. Logistyczna 30, 00-026 Warszawa', '2019-06-12', 'Usługi logistyczne, transport', 'Efektywne zarządzanie łańcuchem dostaw', 'Wdrożenie nowego systemu zarządzania transportem', '666 777 888', 'logistyka@abclogistic.pl', '26'),
 ('8889990001', '888999000', 'Jan Kowalski Consulting', 'Jednoosobowa działalność gospodarcza', 'ul. Konsultacyjna 35, 00-027 Warszawa', '2015-02-18', 'Doradztwo biznesowe', 'Pomoc w rozwoju i strategii biznesowej', 'Przeprowadzenie audytów strategicznych w 5 firmach z branży IT', '777 888 999', 'kontakt@jankowalski.com', '4'),
-('9990001112', '999000111', 'Małgorzata Nowak Fotografia', 'Jednoosobowa działalność gospodarcza', 'ul. Artystyczna 40, 00-028 Warszawa', '2016-04-07', 'Usługi fotograficzne', 'Profesjonalne sesje fotograficzne', 'Organizacja wystawy fotograficznej „Warszawa w Obiektywie”', '888 999 000', 'kontakt@mnfotografia.com' '6'),
+('9990001112', '999000111', 'Małgorzata Nowak Fotografia', 'Jednoosobowa działalność gospodarcza', 'ul. Artystyczna 40, 00-028 Warszawa', '2016-04-07', 'Usługi fotograficzne', 'Profesjonalne sesje fotograficzne', 'Organizacja wystawy fotograficznej „Warszawa w Obiektywie”', '888 999 000', 'kontakt@mnfotografia.com', '6'),
 ('0001112223', '000111222', 'Kancelaria Prawna Nowak & Partnerzy', 'Spółka partnerska', 'ul. Prawnicza 45, 00-029 Warszawa', '2012-11-29', 'Usługi prawne', 'Rzetelna i profesjonalna pomoc prawna', 'Obsługa prawna dużych firm z branży budowlanej', '999 000 111', 'biuro@nowak-partnerzy.pl', '89'),
 ('1112223334', '111222333', 'Maria Kowalska Tłumaczenia', 'Jednoosobowa działalność gospodarcza', 'ul. Tłumaczy 50, 00-030 Warszawa', '2018-02-10', 'Usługi tłumaczeniowe', 'Tłumaczenia dokumentów i tekstów specjalistycznych', 'Tłumaczenie dokumentacji medycznej dla międzynarodowej firmy', '000 111 222', 'kontakt@kowalskatlumaczenia.pl', '16'),
 ('2112223334', '211222333', 'FuturaTech Sp. z o.o.', 'Spółka z ograniczoną odpowiedzialnością', 'ul. Innowacyjna 12, 00-031 Warszawa', '2020-05-15', 'Nowe technologie, startupy', 'Innowacje technologiczne i startupowe', 'Wdrożenie platformy automatyzacji procesów w firmach', '111 333 555', 'kontakt@futuratech.pl', '57'),

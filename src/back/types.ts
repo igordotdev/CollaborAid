@@ -19,4 +19,5 @@ export type UserLegal = {
   latestProjects: string;
   contactNumber: string;
   contactEmail: string;
+  compatibility: number;
 };

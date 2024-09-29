@@ -11,8 +11,6 @@ import { OrgRegister } from "./front/pages/registerOrg.tsx";
 import { RegisterUser } from "./front/pages/registerUser.tsx";
 import { Login } from "./front/pages/login.tsx";
 import { Profile } from "./front/pages/profile.tsx"
-// import { RegisterUser } from "./front/pages/register-user.tsx";
-// import { initDatabase } from "./back/manageDatabase.ts";
 
 function App() {
   return (
