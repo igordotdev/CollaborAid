@@ -5,7 +5,7 @@ import { NavButton } from "./components/Buttons";
 export const Navbar = () => {
   return (
     <>
-      <nav className="w-full h-16 flex pl-4 pt-3 items-center">
+      <nav className="w-full h-20 flex pl-4 items-center bg-transparent">
         <div>
           <Link to="/" className="flex items-center">
             <img src="/vite.svg" alt="Vite Logo" className="h-12" />
