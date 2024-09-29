@@ -12,7 +12,7 @@ export const FilterItem: React.FC<FilterItemProps> = ({ title, styling }) => {
         <input
           type="checkbox"
           id="some_id"
-          className="relative peer shrink-0 appearance-none w-5 h-5 bg-gray-100 rounded-sm mt-1 checked:bg-red-700 checked:border-0"
+          className="relative peer shrink-0 appearance-none w-5 h-5 bg-gray-100 rounded-md mt-1 checked:bg-red-700 checked:border-0"
         />
         <label htmlFor="some_id" className={"text-sm mt-1"}>
           {title}

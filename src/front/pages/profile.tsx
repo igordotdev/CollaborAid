@@ -1,3 +1,5 @@
+import { Login } from "./login.tsx";
+
 const Profile = () => {
 		return (
 			<>
@@ -66,6 +68,5 @@ const Profile = () => {
 			</>
 		);
 };
-
 
 export default Profile;
