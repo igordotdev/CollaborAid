@@ -6,14 +6,9 @@ import Listings from "./front/pages/listings.tsx";
 import Events from "./front/pages/events.tsx";
 import Blog from "./front/pages/blog.tsx";
 import About from "./front/pages/about.tsx";
-<<<<<<< HEAD
 import { OrgRegister } from "./front/pages/register-org.tsx";
-// import Profile from "./front/pages/profile.tsx";
-import { RegisterUser } from "./front/pages/register-user.tsx";
-=======
-import { OrgRegister } from "./front/pages/orgregister.tsx";
 import Profile from "./front/pages/profile.tsx";
->>>>>>> 15080b8dfd43bb9730025d1e40303b79f3e1012c
+// import { RegisterUser } from "./front/pages/register-user.tsx";
 // import { initDatabase } from "./back/manageDatabase.ts";
 
 function App() {
