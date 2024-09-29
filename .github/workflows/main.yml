@@ -1,12 +1,14 @@
 on: workflow_dispatch
 
 jobs:
-  deploy:
-    name: deploy
+  build:
+    name: build
     runs-on: ubuntu-22.04
     steps:
     - name: install bun
       run: curl -fsSL https://bun.sh/install | bash
+    - name: Load bun
+      run: source /home/runner/.bashrc 
     - name: install dependencies
       run: bun install
     - name: start db
