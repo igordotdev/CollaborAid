@@ -1,13 +1,14 @@
 import { FilledButton } from "../components/Buttons";
 import { Link } from "react-router-dom";
 
-export const OrgRegister1 = () => {
+export const OrgRegister = () => {
 	return (
 		<>
 			<div className="flex flex-col items-center">
 				<h1 className="mt-[10%] text-center font-semibold text-3xl">Let's get you started</h1>
 				<h2 className="mt-4 text-center text-xl">Enter your details</h2>
 			</div>
+			<form>
 			<div className="justify-center flex flex-row pt-6">
 				<div className="pr-4 w-auto">
 					<div className="justify-left w-72">
@@ -46,7 +47,30 @@ export const OrgRegister1 = () => {
 					</div>
 				</div>
 			</div>
-			<div className="pt-8 flex w-full justify-center"> <Link to='/orgregister2'> <FilledButton title="Next" styling=""/> </Link> </div>
+			<div className="justify-center flex flex-row pt-6">
+			<div className="pr-4 w-auto">
+					<div className="justify-left w-72">
+						<p className="font-medium pb-1">Scope of Activities</p>
+						<input className="px-4 w-72 h-10 border-gray-300 border-[1px] rounded-lg" type="text" placeholder="Type something here" />
+					</div>
+					<div className="pt-4 justify-left w-72">
+						<p className="font-medium pb-1">Latest Projects</p>
+						<input className="px-4 w-72 h-24 border-gray-300 border-[1px] rounded-lg" type="text" placeholder="Type something here" />
+					</div>
+				</div>
+				<div className="pl-4 w-auto">
+				<div className="justify-left w-72">
+						<p className="font-medium pb-1">Phone number</p>
+						<input className="px-4 w-72 h-10 border-gray-300 border-[1px] rounded-lg" type="number" placeholder="123456789" />
+					</div>
+				<div className="justify-left w-72">
+						<p className="pt-4 font-medium pb-1">Main Values</p>
+						<input className="px-4 w-72 h-24 border-gray-300 border-[1px] rounded-lg" type="text" placeholder="Type something here" />
+					</div>
+				</div>
+			</div>
+			</form>
+			<div className="pt-8 flex w-full justify-center"> <Link to='/profile'> <FilledButton title="Register" styling=""/> </Link> </div>
 			<div className="flex justify-center"> <p> Already have an account? </p> <Link to='/login'> <p className="font-medium underline pl-1"> Log in </p> </Link></div>
 		</>
 	);
