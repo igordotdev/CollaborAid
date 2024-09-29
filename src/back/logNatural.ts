@@ -1,67 +1,31 @@
 import { Database } from "bun:sqlite";
 import { getTokenFromRequest, generateToken, SECRET_KEY } from "./logUtils";
 import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
 
-// Function to handle login logic
-function tryLogInNatural(db: Database) {
-  return async (req: Request) => {
-    const url = new URL(req.url);
+export async function login(db: Database, req: Request): Promise<Response> {
+  try {
+    const { email, password } = await req.json();
 
-    // Login endpoint
-    if (url.pathname === "/login" && req.method === "POST") {
-      const { email, password } = await req.json();
+    // Query the database for the user
+    const user = db.query("SELECT * FROM users WHERE email = ? AND password = ?").get(email, password);
 
-      // Query the database for the user
-      const row: any = db
-        .query("SELECT * FROM naturalEntities WHERE email = ?")
-        .get(email);
-
-      if (row && bcrypt.compareSync(password, row.password)) {
-        // If user found, create a JWT and send it as a cookie
-        const token = generateToken(email);
-        return new Response("Logged in successfully", {
-          headers: {
-            "Set-Cookie": `token=${token}; HttpOnly; Max-Age=604800; Path=/`, // Cookie expires in 7 days
-            "Content-Type": "text/plain",
-          },
-        });
-      } else {
-        return new Response("Invalid credentials", { status: 401 });
-      }
+    if (!user) {
+      return new Response("Invalid email or password", { status: 401 });
     }
 
-    // Protected endpoint
-    if (url.pathname === "/protected" && req.method === "GET") {
-      const token = getTokenFromRequest(req);
+    // Generate a JWT token upon successful authentication
+    const token = jwt.sign({ username: user.email, id: user.id }, SECRET_KEY, { expiresIn: "7d" });
 
-      if (!token) {
-        return new Response("Access denied", { status: 401 });
-      }
-
-      try {
-        const payload = jwt.verify(token, SECRET_KEY) as { email: string };
-        return new Response(`Welcome back, ${payload.email}`, {
-          status: 200,
-        });
-      } catch {
-        return new Response("Invalid token", { status: 401 });
-      }
-    }
-
-    // Logout endpoint (clears the token cookie)
-    if (url.pathname === "/logout" && req.method === "POST") {
-      return new Response("Logged out", {
-        headers: {
-          "Set-Cookie": `token=; HttpOnly; Max-Age=0; Path=/`,
-          "Content-Type": "text/plain",
-        },
-      });
-    }
-
-    return new Response("Not found", { status: 404 });
-  };
+    // Set the token in the response cookies (adjust as necessary for your frontend)
+    return new Response(JSON.stringify({ message: "Login successful" }), {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
+        "Set-Cookie": `token=${token}; HttpOnly; Path=/; Max-Age=604800`, // 7 days expiration
+      },
+    });
+  } catch (error) {
+    console.error("Login error:", error);
+    return new Response("Internal Server Error", { status: 500 });
+  }
 }
-
-// Export the handler
-export { tryLogInNatural };

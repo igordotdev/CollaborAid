@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { UserLegal } from "../../back/types.ts";
 import { CompanyListItem } from "../components/CompanyListItem.tsx";
+import { useNavigate, Link } from "react-router-dom";
+import Profile from "./profile.tsx";
 
 const Listings = () => {
 	const [page, setPage] = useState(1);
@@ -12,7 +14,6 @@ const Listings = () => {
 	const handlePreviousPage = () => {
 		setPage((prevPage) => (prevPage > 1 ? prevPage - 1 : 1));
 	};
-
 
 	const fetchUsers = async () => {
 		const response = await fetch("http://localhost:3000/api/legalEntities");
@@ -31,8 +32,10 @@ const Listings = () => {
 		<ul className="w-full">
         {users.slice(page-1,10+page-1).map((user) => (
           <li className="mb-2">
+			<Link to={`/profile/${user.REGON}`}>
             <CompanyListItem location={user.address} title={user.name} description={user.mainValuesAndObjectives} date={user.dateOfStart} styling={"ml-[20%] flex text-left"} />
-          </li>
+			</Link>
+		  </li>
         ))}
       </ul>
 		</div>

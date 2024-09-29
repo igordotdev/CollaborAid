@@ -24,7 +24,7 @@ export const Navbar = () => {
         <Link className="ml-12" to="/about">
           <NavButton styling="font-semibold" title="About" />
         </Link>
-        <Link className="ml-auto mr-6 w-12 h-12" to="/profile">
+        <Link className="ml-auto mr-6 w-12 h-12" to="/login">
           <ProfileButton
             styling=""
             img="/assets/profile-icon.svg"
