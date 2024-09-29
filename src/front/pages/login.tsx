@@ -1,11 +1,43 @@
 import { useState } from "react";
 import { FilledButton, NavButton } from "../components/Buttons.tsx";
 import { FilterItem } from "../components/FilterItem.tsx";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom"; // Import useNavigate for redirection
+import { BASE_URL } from "../../config"; // Make sure to define your base URL for the API
 
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(""); // State for error message
+  const navigate = useNavigate(); // Hook for navigation
+
+  const handleLogin = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (!response.ok) {
+        const errorMessage = await response.text();
+        setError(errorMessage); // Set error message
+        return;
+      }
+
+      // Clear error message if login is successful
+      setError("");
+
+      // Optionally handle successful login (like storing the token or redirecting)
+      // Example of redirecting to a protected route
+      navigate("/protected"); // Adjust to the route you want to redirect to
+
+    } catch (err) {
+      console.error("Login failed", err);
+      setError("An unexpected error occurred."); // Handle fetch error
+    }
+  };
 
   return (
     <>
@@ -35,7 +67,12 @@ export const Login = () => {
           <FilterItem title={"Remember Me"} />
           <NavButton title={"Forgot password?"} styling={"text-sm"} />
         </div>
-        <FilledButton title={"Log In"} styling={"w-44 mt-10"} />
+        <FilledButton 
+          title={"Log In"} 
+          styling={"w-44 mt-10"} 
+          onClick={handleLogin} // Attach the click handler
+        />
+        {error && <p className="text-red-500 mt-2">{error}</p>} {/* Display error message */}
         <p className={"mt-5 text-sm"}>Don't have an account?</p>
         <div className={"flex w-80 justify-between"}>
           <Link to={"/registerUser"}>
