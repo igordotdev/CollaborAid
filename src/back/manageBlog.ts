@@ -5,7 +5,7 @@ function startBlogTable(db: Database) {
   db.run("PRAGMA foreign_keys = ON;");
 
   // Drop the table if it exists for development purposes (comment out later)
-//   db.run("DROP TABLE IF EXISTS blogPosts");
+  db.run("DROP TABLE IF EXISTS blogPosts");
 
   // Check if the table exists
   const tableExists = db

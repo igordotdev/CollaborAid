@@ -22,12 +22,12 @@ const Profile = () => {
     // Fetch company data from the backend
     const fetchCompanyData = async () => {
         try {
-            const response = await fetch("http://localhost:3000/api/legalEntities/1234567890"); // Update with your actual endpoint
+            const response = await fetch("http://localhost:3000/api/legalEntities"); // Update with your actual endpoint
             if (!response.ok) {
                 throw new Error("Network response was not ok");
             }
             const data = await response.json();
-            setCompany(data); // Store the data in state
+            setCompany(data[0]); // Store the data in state
         } catch (error) {
             setError("Failed to fetch company data");
         } finally {
@@ -100,9 +100,6 @@ const Profile = () => {
                 <div className="flex flex-col w-[50%]">
                     <div className="h-56">
                         <h1 className="text-2xl font-bold text-red-700">About</h1>
-                        <p className="ml-4 text-lg mt-2 mb-1 text-pretty text-left">
-                            Scope of Activities: {company.scopeOfActivities}
-                        </p>
                         <p className="ml-4 text-lg mt-1 mb-1 text-pretty text-left">
                             Main Values and Objectives: {company.mainValuesAndObjectives}
                         </p>
@@ -114,7 +111,7 @@ const Profile = () => {
                         <div>
                             <h1 className="text-2xl font-bold text-red-700">Areas</h1>
                             <p className="ml-4 text-lg mt-2 text-pretty text-left">
-                                Areas: {/* Add area information here if applicable */}
+							Scope of Activities: {company.scopeOfActivities}
                             </p>
                         </div>
                     </div>
