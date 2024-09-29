@@ -1,0 +1,15 @@
+on: workflow_dispatch
+
+jobs:
+  deploy:
+    name: deploy
+    runs-on: ubuntu-22.04
+    steps:
+    - name: install bun
+      run: curl -fsSL https://bun.sh/install | bash
+    - name: install dependencies
+      run: bun install
+    - name: start db
+      run: bun ./src/back/manageDatabase.ts
+    - name: start front
+      run: bun run dev
