@@ -1,7 +1,7 @@
 export const EventItem = () => {
   return (
     <div
-      className={"flex bg-gray-100 rounded-xl w-10/12 mb-12 py-6 items-center"}
+      className={"flex bg-gray-100 rounded-xl w-10/12 mb-6 py-6 items-center"}
     >
       <div className={"text-center"}>
         <p className={"text-red-800 text-4xl font-bold px-10"}>23</p>
