@@ -1,15 +1,9 @@
 const About = () => {
   return (
     <>
-      <div className="flex flex-col items-center pt-24 h-screen">
-        <div className={"w-full h-[50vh]"}>
-          <img
-            src={"./public/assets/img.jpg"}
-            className={"w-full h-full object-center object-cover"}
-          />
-        </div>
-        <h1 className="text-4xl font-bold mt-10">About Us</h1>
-        <p className="w-[70%] mb-[30%] text-xl mt-4 text-pretty text-center">
+      <div className="flex flex-col pt-10 items-end h-screen" style={{ backgroundImage: "url('/assets/img.jpg')", backgroundPosition: 'center', backgroundSize: 'cover' }}>
+        <h1 className="text-4xl font-bold mr-12">About Us</h1>
+        <p className="w-[60%] text-xl mt-4 mr-8 font-medium text-pretty text-right">
           CollaborAid was built with upmost care to provide you with the most
           seamless experience in finding your next collaboration. We believe
           that great things are born when people come together and our service
