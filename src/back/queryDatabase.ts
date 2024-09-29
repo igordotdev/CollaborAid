@@ -149,7 +149,7 @@ function setEndpointDatabase(db: Database) {
           req.method === "GET" &&
           url.pathname === "/api/blogPosts"
         ){
-          const posts = db.query("SELECT * FROM blogPosts SORT BY date DESC").all();
+          const posts = db.query("SELECT * FROM blogPosts").all();
           return new Response(JSON.stringify(posts), { headers: corsHeaders });
         } else {
           return new Response("Not Found", {
