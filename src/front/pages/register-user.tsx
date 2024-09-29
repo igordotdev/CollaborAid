@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 /* type User = {
   id: number;
@@ -18,6 +19,7 @@ export const RegisterUser = () => {
   const [city, setCity] = useState("");
   const [password, setPassword] = useState("");
 
+  const navigate = useNavigate();
   // Add a new user
   const handleAddUser = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -46,6 +48,7 @@ export const RegisterUser = () => {
         setEmail("");
         setAge("");
         setPassword("");
+        navigate("/");
       } else {
         alert("Failed to add user.");
       }
