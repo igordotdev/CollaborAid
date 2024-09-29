@@ -25,7 +25,7 @@ function DownloadCSVButton(csvData: string) {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'data.csv';
+    a.download = 'listings.csv';
     document.body.appendChild(a);
     a.click();
     a.remove();
