@@ -1,7 +1,7 @@
 const About = () => {
 		return (
 			<>
-				<div className="flex flex-col items-center pt-24 h-screen">
+				<div className="flex flex-col items-center h-screen">
 						<h1 className="mt-[30%] text-4xl font-bold">About Us</h1>
 						<p className="w-[70%] mb-[30%] text-xl mt-4 text-pretty text-center">
 						CollaborAid was built with upmost care to provide
