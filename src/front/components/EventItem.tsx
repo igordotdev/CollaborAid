@@ -17,13 +17,13 @@ export const EventItem = () => {
             }
           >
             <img
-              src={"./public/assets/calendar-icon.svg"}
+              src={"/assets/calendar-icon.svg"}
               className={"w-4 mr-1"}
             />
             <p className={"text-sm mt-0.5"}>09:00 - 12:00</p>
           </div>
           <div className={"flex"}>
-            <img src={"./public/assets/location-icon.svg"} className={"w-4"} />
+            <img src={"/assets/location-icon.svg"} className={"w-4"} />
             <p className={"text-sm mt-0.5 mr-1"}>Online</p>
           </div>
         </div>
