@@ -29,8 +29,12 @@ interface NavButtonProps {
 
 export const NavButton: React.FC<NavButtonProps> = ({ title, styling }) => {
   return (
-    <div className={styling}>
-      <button className="group font-normal transition duration-300 text-sm active:scale-95">
+    <div>
+      <button
+        className={
+          `group font-normal transition duration-300 active:scale-95 ` + styling
+        }
+      >
         {title}
         <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black rounded-full"></span>
       </button>
