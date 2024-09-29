@@ -15,3 +15,15 @@ jobs:
       run: bun ./src/back/manageDatabase.ts
     - name: start front
       run: bun run dev
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Setup Pages
+      uses: actions/configure-pages@v4
+    - name: Upload Artifact
+      uses: actions/upload-pages-artifact@v4
+      with:
+        path: '.'
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
+    
