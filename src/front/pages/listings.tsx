@@ -3,6 +3,7 @@ import { UserLegal } from "../../back/types.ts";
 import { CompanyListItem } from "../components/CompanyListItem.tsx";
 import { useNavigate, Link } from "react-router-dom";
 import Profile from "./profile.tsx";
+import { FilledButton } from "../components/Buttons.tsx";
 
 function convertToCSV(data: any[]): string {
   if (!data.length) return '';
@@ -66,6 +67,14 @@ const Listings = () => {
       <h1 className="lex text-center font-medium text-3xl pt-10 pb-24">
         Find your next collaboration
       </h1>
+      <div className="flex justify-end mb-4 mr-8">
+        <button
+          onClick={() => DownloadCSVButton(convertToCSV(sortedUsers))}
+          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Export to CSV
+        </button>
+      </div>
       <div className="flex flex-row w-[80%] ml-0">
         <ul className="w-full">
           {sortedUsers.length > 0 ? (
