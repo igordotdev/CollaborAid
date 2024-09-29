@@ -107,7 +107,7 @@ export const RegisterUser = () => {
       </div>
       <button
         className={
-          "bg-blue-500 hover:bg-blue-600 active:scale-90 mt-10 py-3 px-5 rounded-2xl"
+          "bg-red-700 hover:bg-red-900 active:scale-90 mt-10 py-3 px-5 rounded-2xl"
         }
         type={"submit"}
       >
