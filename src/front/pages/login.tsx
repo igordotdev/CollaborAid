@@ -18,20 +18,24 @@ export const Login = () => {
         },
         body: JSON.stringify({ email, password }),
       });
-
+  
       if (!response.ok) {
         const errorMessage = await response.text();
         setError(errorMessage); // Set error message
         return;
       }
-
+  
       // Clear error message if login is successful
       setError("");
-
-      // Optionally handle successful login (like storing the token or redirecting)
-      // Example of redirecting to a protected route
-      navigate("/protected"); // Adjust to the route you want to redirect to
-
+  
+      // Optionally store the token in local storage (or cookies if needed)
+      const data = await response.json();
+      document.cookie = `token=${data.token}; Path=/`; // Store the token in cookies
+      // Alternatively: localStorage.setItem('token', data.token);
+  
+      // Redirect to a protected route
+      navigate("/"); // Adjust to the route you want to redirect to
+  
     } catch (err) {
       console.error("Login failed", err);
       setError("An unexpected error occurred."); // Handle fetch error

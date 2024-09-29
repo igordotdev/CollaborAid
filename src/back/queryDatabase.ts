@@ -2,6 +2,8 @@ import { serve } from "bun";
 import { Database } from "bun:sqlite";
 import { buildQueryNatural } from "./manageNatural";
 import { buildQueryLegal } from "./manageLegal";
+import { generateToken, SECRET_KEY } from "./logUtils";
+import jwt from "jsonwebtoken";
 
 // Define the common CORS headers
 const corsHeaders = {
@@ -10,7 +12,6 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "Content-Type",
   "Content-Type": "application/json",
 };
-
 
 //this code is unreadable but I dont have time to refactor it
 //and its my first time doing backend
@@ -145,12 +146,39 @@ function setEndpointDatabase(db: Database) {
             status: 200,
             headers: corsHeaders,
           });
-        } else if (
-          req.method === "GET" &&
-          url.pathname === "/api/blogPosts"
-        ){
+        } else if (req.method === "GET" && url.pathname === "/api/blogPosts") {
           const posts = db.query("SELECT * FROM blogPosts").all();
           return new Response(JSON.stringify(posts), { headers: corsHeaders });
+        } else if (req.method === "POST" && url.pathname === "/api/login") {
+          // Ensure that the request body is in JSON format
+          try {
+            const { email, password } = await req.json(); // Adjust based on your new form
+            const user = db.run(
+              "SELECT * FROM naturalEntities WHERE email = ? AND password = ?",
+              [email, password]
+            );
+            if (!user) {
+              return new Response("Invalid email or password", { status: 401 });
+            }
+
+            // Generate a JWT token upon successful authentication
+            const token = generateToken(email);
+
+            // Set the token in the response cookies (adjust as necessary for your frontend)
+            return new Response(
+              JSON.stringify({ message: "Login successful" }),
+              {
+                status: 200,
+                headers: {
+                  "Content-Type": "application/json",
+                  "Set-Cookie": `token=${token}; HttpOnly; Path=/; Max-Age=604800`, // 7 days expiration
+                },
+              }
+            );
+          } catch (error) {
+            console.error("Login error:", error);
+            return new Response("Internal Server Error", { status: 500 });
+          }
         } else {
           return new Response("Not Found", {
             status: 404,
