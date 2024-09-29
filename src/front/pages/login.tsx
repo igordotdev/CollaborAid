@@ -33,16 +33,22 @@ export const Login = () => {
         </div>
         <div className={"flex w-96 justify-between mt-5"}>
           <FilterItem title={"Remember Me"} />
-          <NavButton title={"Forgot password?"} />
+          <NavButton title={"Forgot password?"} styling={"text-sm"} />
         </div>
         <FilledButton title={"Log In"} styling={"w-44 mt-10"} />
         <p className={"mt-5 text-sm"}>Don't have an account?</p>
         <div className={"flex w-80 justify-between"}>
+<<<<<<< HEAD
           <Link to={"/registerUser"}>
             <NavButton title={"Register as user"} />
           </Link>
           <Link to={"/registerOrg"}>
             <NavButton title={"Register as company"} />
+=======
+          <NavButton title={"Register as user"} styling={"text-sm"} />
+          <Link to={"/orgregister"}>
+            <NavButton title={"Register as company"} styling={"text-sm"} />
+>>>>>>> 5cdd2902f81e5b3386bb035d82ba760c34da6a9f
           </Link>
         </div>
       </div>
