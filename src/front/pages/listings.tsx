@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { User } from "../../back/types.ts";
 
-
-
-
-
 const Listings = () => {
 
 	const fetchUsers = async () => {
