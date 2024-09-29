@@ -6,7 +6,8 @@ import Listings from "./front/pages/listings.tsx";
 import Events from "./front/pages/events.tsx";
 import Blog from "./front/pages/blog.tsx";
 import About from "./front/pages/about.tsx";
-import { OrgRegister } from "./front/pages/register-org.tsx";
+import { OrgRegister } from "./front/pages/registerOrg.tsx";
+import { RegisterUser } from "./front/pages/registerUser.tsx";
 import Profile from "./front/pages/profile.tsx";
 // import { RegisterUser } from "./front/pages/register-user.tsx";
 // import { initDatabase } from "./back/manageDatabase.ts";
@@ -21,7 +22,8 @@ function App() {
         <Route path="/events" element={<Events />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/about" element={<About />} />
-        <Route path="/orgregister" element={<OrgRegister />} />
+        <Route path="/registerOrg" element={<OrgRegister />} />
+        <Route path="/registerUser" element={<RegisterUser />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>
     </Router>

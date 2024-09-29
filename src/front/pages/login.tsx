@@ -38,8 +38,10 @@ export const Login = () => {
         <FilledButton title={"Log In"} styling={"w-44 mt-10"} />
         <p className={"mt-5 text-sm"}>Don't have an account?</p>
         <div className={"flex w-80 justify-between"}>
-          <NavButton title={"Register as user"} />
-          <Link to={"/orgregister"}>
+          <Link to={"/registerUser"}>
+            <NavButton title={"Register as user"} />
+          </Link>
+          <Link to={"/registerOrg"}>
             <NavButton title={"Register as company"} />
           </Link>
         </div>

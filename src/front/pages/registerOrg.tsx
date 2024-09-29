@@ -246,7 +246,7 @@ export const OrgRegister = () => {
                 {/* Next Button */}
                 {currentStep === 0 && (
                     <div className="pt-8 flex w-full justify-center">
-                        <button type="button" onClick={nextStep} className="bg-blue-500 text-white px-4 py-2 rounded">
+                        <button type="button" onClick={nextStep} className="bg-red-700 text-white px-4 py-2 rounded">
                             Next
                         </button>
                     </div>
