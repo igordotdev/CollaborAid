@@ -2,7 +2,6 @@ import { useState } from "react";
 import { FilledButton, NavButton } from "../components/Buttons.tsx";
 import { FilterItem } from "../components/FilterItem.tsx";
 import { Link, Outlet, useNavigate } from "react-router-dom"; // Import useNavigate for redirection
-import { BASE_URL } from "../../config"; // Make sure to define your base URL for the API
 
 export const Login = () => {
   const [email, setEmail] = useState("");

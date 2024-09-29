@@ -1,6 +1,5 @@
 import { serve } from "bun";
 import { Database } from "bun:sqlite";
-import bcrypt from "bcrypt";
 import { buildQueryNatural } from "./manageNatural";
 import { buildQueryLegal } from "./manageLegal";
 
@@ -50,11 +49,10 @@ function setEndpointDatabase(db: Database) {
           // Ensure that the request body is in JSON format
           const { firstName, lastName, age, email, city, password } =
             await req.json(); // Adjust based on your new form
-          const hashedPassword = bcrypt.hashSync(password, 10);
           // Insert user into the database
           db.run(
             "INSERT INTO naturalEntities (firstName, lastName, age, email, city, password) VALUES (?, ?, ?, ?, ?, ?)",
-            [firstName, lastName, age, email, city, hashedPassword]
+            [firstName, lastName, age, email, city, password]
           );
           return new Response("User added successfully", {
             status: 201,
@@ -115,7 +113,6 @@ function setEndpointDatabase(db: Database) {
             contactEmail,
             password,
           } = await req.json(); // Adjust based on your new form
-          const hashedPassword = bcrypt.hashSync(password, 10);
           // Insert user into the database
           db.run(
             "INSERT INTO legalEntities (NIP, REGON, name, legalForm, address, dateOfStart, ScopeOfActivities, mainValuesAndObjectives, latestProjects, contactNumber, contactEmail, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
@@ -131,7 +128,7 @@ function setEndpointDatabase(db: Database) {
               latestProjects,
               contactNumber,
               contactEmail,
-              hashedPassword,
+              password,
             ]
           );
           return new Response("Company/NGO added successfully", {

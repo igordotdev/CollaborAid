@@ -2,7 +2,6 @@ import { serve } from "bun";
 import { Database } from "bun:sqlite";
 import { getTokenFromRequest, generateToken, SECRET_KEY } from "./logUtils";
 import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
 
 function tryLogInLegal(db: Database) {
   const server = serve({
@@ -19,7 +18,7 @@ function tryLogInLegal(db: Database) {
           .query("SELECT * FROM legalEntities WHERE REGON = ? AND password = ?")
           .get(REGON, password);
 
-        if (row && bcrypt.compareSync(password, row.password)) {
+        if (row) {
           // If user found, create a JWT and send it as a cookie
           const token = generateToken(REGON);
           return new Response("Logged in successfully", {
