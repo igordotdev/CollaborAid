@@ -4,6 +4,35 @@ import { CompanyListItem } from "../components/CompanyListItem.tsx";
 import { useNavigate, Link } from "react-router-dom";
 import Profile from "./profile.tsx";
 
+function convertToCSV(data: any[]): string {
+  if (!data.length) return '';
+
+  // Extract column headers
+  const headers = Object.keys(data[0]);
+
+  // Map rows to CSV string
+  const rows = data.map(row =>
+    headers.map(header => `"${row[header]}"`).join(',')
+  );
+
+  // Join headers and rows with line breaks
+  return [headers.join(','), ...rows].join('\n');
+}
+
+function DownloadCSVButton(csvData: string) {
+    // Create a temporary link to trigger download
+    const blob = new Blob([csvData], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'data.csv';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    window.URL.revokeObjectURL(url);
+  };
+
+
 const Listings = () => {
   const [page, setPage] = useState(1);
 
@@ -68,6 +97,12 @@ const Listings = () => {
             className="bg-red-700 hover:bg-red-900 text-white font-bold py-2 px-4 rounded"
           >
             Previous
+          </button>
+          <button
+            onClick={() => DownloadCSVButton(convertToCSV(sortedUsers))}
+            className="bg-red-700 hover:bg-red-900 text-white font-bold py-2 px-4 rounded"
+          >
+            Export to CSV
           </button>
           <p className="w-[53%]"></p>
           <button
