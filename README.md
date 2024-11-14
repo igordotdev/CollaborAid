@@ -1,4 +1,7 @@
 # CollaborAid Project
+
+Website made for a "Social Bridge Impact" task at 2024 Hack yeah hackathon in Cracow
+
 To build and run follow these steps:
 
 1. Install bun.sh
